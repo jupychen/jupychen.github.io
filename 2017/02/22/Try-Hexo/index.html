@@ -5,25 +5,31 @@
   
   <title>Try Hexo | J</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="这是我第一次使用github.io，也是我第一次使用hexo，感觉很nice，几分钟就有一个博客了，记录一下。
-创建一个仓库这个就没啥说的了，我的是jupychen.github.io，然后pull到本地，开始造起来！
-安装一个Hexo的环境这里我就用docker偷懒了，直接写了个Dockerfile。内容是：
-123FROM node:latestRUN npm install -g hexoW">
+  <meta name="description" content="第一次使用github.io，也是第一次使用hexo，感觉很nice，几分钟就有一个博客了。
+创建仓库我的是jupychen.github.io，pull到本地，开始造起来！
+安装Hexo这里用docker偷懒，写个Dockerfile。内容是：
+123FROM node:latestRUN npm install -g hexoWORKDIR /app
+build起来：
+1$ docker bu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Try Hexo">
 <meta property="og:url" content="http://jupychen.mymark.top/2017/02/22/Try-Hexo/index.html">
 <meta property="og:site_name" content="J">
-<meta property="og:description" content="这是我第一次使用github.io，也是我第一次使用hexo，感觉很nice，几分钟就有一个博客了，记录一下。
-创建一个仓库这个就没啥说的了，我的是jupychen.github.io，然后pull到本地，开始造起来！
-安装一个Hexo的环境这里我就用docker偷懒了，直接写了个Dockerfile。内容是：
-123FROM node:latestRUN npm install -g hexoW">
-<meta property="og:updated_time" content="2017-02-22T13:43:51.000Z">
+<meta property="og:description" content="第一次使用github.io，也是第一次使用hexo，感觉很nice，几分钟就有一个博客了。
+创建仓库我的是jupychen.github.io，pull到本地，开始造起来！
+安装Hexo这里用docker偷懒，写个Dockerfile。内容是：
+123FROM node:latestRUN npm install -g hexoWORKDIR /app
+build起来：
+1$ docker bu">
+<meta property="og:updated_time" content="2017-02-22T14:01:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Try Hexo">
-<meta name="twitter:description" content="这是我第一次使用github.io，也是我第一次使用hexo，感觉很nice，几分钟就有一个博客了，记录一下。
-创建一个仓库这个就没啥说的了，我的是jupychen.github.io，然后pull到本地，开始造起来！
-安装一个Hexo的环境这里我就用docker偷懒了，直接写了个Dockerfile。内容是：
-123FROM node:latestRUN npm install -g hexoW">
+<meta name="twitter:description" content="第一次使用github.io，也是第一次使用hexo，感觉很nice，几分钟就有一个博客了。
+创建仓库我的是jupychen.github.io，pull到本地，开始造起来！
+安装Hexo这里用docker偷懒，写个Dockerfile。内容是：
+123FROM node:latestRUN npm install -g hexoWORKDIR /app
+build起来：
+1$ docker bu">
   
     <link rel="alternate" href="/atom.xml" title="J" type="application/atom+xml">
   
@@ -94,24 +100,27 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这是我第一次使用<code>github.io</code>，也是我第一次使用<code>hexo</code>，感觉很nice，几分钟就有一个博客了，记录一下。</p>
-<h3 id="创建一个仓库"><a href="#创建一个仓库" class="headerlink" title="创建一个仓库"></a>创建一个仓库</h3><p>这个就没啥说的了，我的是<code>jupychen.github.io</code>，然后pull到本地，开始造起来！</p>
-<h3 id="安装一个Hexo的环境"><a href="#安装一个Hexo的环境" class="headerlink" title="安装一个Hexo的环境"></a>安装一个Hexo的环境</h3><p>这里我就用docker偷懒了，直接写了个<code>Dockerfile</code>。<br>内容是：</p>
+        <p>第一次使用<code>github.io</code>，也是第一次使用<code>hexo</code>，感觉很nice，几分钟就有一个博客了。</p>
+<h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><p>我的是<code>jupychen.github.io</code>，pull到本地，开始造起来！</p>
+<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>这里用<code>docker</code>偷懒，写个<code>Dockerfile</code>。<br>内容是：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FROM node:latest</div><div class="line">RUN npm install -g hexo</div><div class="line">WORKDIR /app</div></pre></td></tr></table></figure>
-<p>然后就build起来：</p>
+<p><code>build</code>起来：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker build -t myhexo .</div></pre></td></tr></table></figure>
-<p>然后加个alias，记得<code>source</code>一下：</p>
+<p>加个<code>alias</code>，记得<code>source</code>一下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> hexo=<span class="string">'docker run --rm -v $(pwd):/app -t myhexo hexo'</span></div></pre></td></tr></table></figure>
-<h3 id="然后就开始写啦"><a href="#然后就开始写啦" class="headerlink" title="然后就开始写啦"></a>然后就开始写啦</h3><p>新建一个文件夹<code>blog</code>， 然后在这里运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo init</div></pre></td></tr></table></figure>
-<p>噔噔噔，就有一个雏形了，然后再：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo new <span class="string">'First Blog'</span></div></pre></td></tr></table></figure>
-<p>这是就会发现<code>./source/</code>下多了一个md文件，然后就开始写吧，写完运行一下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">hexo generate</div></pre></td></tr></table></figure>
-<p>这里就有了<code>public</code>文件夹</p>
-<h3 id="最后发布出去"><a href="#最后发布出去" class="headerlink" title="最后发布出去"></a>最后发布出去</h3><p>把最开始pull下来的<code>.git</code>文件夹放到<code>public</code>文件夹里面去，然后用git提交到你的github仓库里面，然后打开<a href="https://jupychen.github.io" target="_blank" rel="external">jupychen.github.io</a>，就能看到你的博客啦。</p>
-<h3 id="另外"><a href="#另外" class="headerlink" title="另外"></a>另外</h3><p>如果你想要有自己的域名，就在<code>public</code>文件夹里加个<code>CNAME</code>文件，然后把你自己的域名放进去，并且在把自己的域名<code>CNAME</code>解析到<code>jupychen.github.io</code>。</p>
-<p>然后打开<a href="http://jupychen.mymark.top">jupychen.mymark.top</a></p>
+<h3 id="开始写"><a href="#开始写" class="headerlink" title="开始写"></a>开始写</h3><p>新建一个文件夹<code>blog</code>， 在这里运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div></pre></td></tr></table></figure>
+<p>噔噔噔，就有一个雏形了，再：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">'First Blog'</span></div></pre></td></tr></table></figure>
+<p>会发现<code>./source/</code>下多了一个md文件，然后就开始写作，写完运行一下：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>就有了<code>public</code>文件夹。</p>
+<h3 id="修改文章"><a href="#修改文章" class="headerlink" title="修改文章"></a>修改文章</h3><p>只需要修改<code>./source/</code>下的md文件，完成后运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+<p>就自动更新了<code>public</code>文件夹下的内容。</p>
+<h3 id="发布出去"><a href="#发布出去" class="headerlink" title="发布出去"></a>发布出去</h3><p>把最开始pull下来的<code>.git</code>文件夹放到<code>public</code>文件夹中，用git提交到你的github仓库（<code>jupychen.github.io</code>）里面，然后打开<a href="https://jupychen.github.io" target="_blank" rel="external">jupychen.github.io</a>，就能看到博客啦。</p>
+<h3 id="另外"><a href="#另外" class="headerlink" title="另外"></a>另外</h3><p>如果想要有自己的域名，就在<code>public</code>文件夹里加个<code>CNAME</code>文件，写入自己的域名，并将该域名<code>CNAME</code>解析到<code>jupychen.github.io</code>。</p>
+<p>打开<a href="http://jupychen.mymark.top">jupychen.mymark.top</a></p>
 <p>就酱！</p>
 
       
