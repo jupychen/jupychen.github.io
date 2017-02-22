@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jupychen.mymark.top/"/>
-  <updated>2017-02-22T14:01:31.000Z</updated>
+  <updated>2017-02-22T14:31:13.000Z</updated>
   <id>http://jupychen.mymark.top/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://jupychen.mymark.top/2017/02/22/Try-Hexo/"/>
     <id>http://jupychen.mymark.top/2017/02/22/Try-Hexo/</id>
     <published>2017-02-22T13:12:50.000Z</published>
-    <updated>2017-02-22T14:01:31.000Z</updated>
+    <updated>2017-02-22T14:31:13.000Z</updated>
     
     <content type="html"><![CDATA[<p>第一次使用<code>github.io</code>，也是第一次使用<code>hexo</code>，感觉很nice，几分钟就有一个博客了。</p>
 <h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><p>我的是<code>jupychen.github.io</code>，pull到本地，开始造起来！</p>
@@ -30,6 +30,12 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker build -t myhexo .</div></pre></td></tr></table></figure>
 <p>加个<code>alias</code>，记得<code>source</code>一下：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> hexo=<span class="string">'docker run --rm -v $(pwd):/app -t myhexo hexo'</span></div></pre></td></tr></table></figure>
+<h3 id="安装hexo-generator-feed"><a href="#安装hexo-generator-feed" class="headerlink" title="安装hexo-generator-feed"></a>安装<code>hexo-generator-feed</code></h3><p>为了实现feed订阅功能，生成<code>atom.xml</code>，需要安装<code>hexo-generator-feed</code>。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --rm -v $(<span class="built_in">pwd</span>):/app -t myhexo npm install hexo-generator-feed --save</div></pre></td></tr></table></figure>
+<p>执行完上述命令，在<code>node_modules</code>文件夹下就可以看到<code>hexo-generator-feed</code>已经安装成功。</p>
+<p>接着在<code>_config.yml</code>文件中添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">plugin:</div><div class="line">- hexo-generator-feed</div><div class="line">feed:</div><div class="line"><span class="built_in">type</span>: atom</div><div class="line">path: atom.xml</div><div class="line"><span class="built_in">limit</span>: 0</div><div class="line">hub:</div><div class="line">content:</div></pre></td></tr></table></figure>
+<p>有些主题自带<code>feed</code>的连接，没要的需要加上。（可以搜索主题的文档说明，feed连接是<code>/atom.xml</code>）。</p>
 <h3 id="开始写"><a href="#开始写" class="headerlink" title="开始写"></a>开始写</h3><p>新建一个文件夹<code>blog</code>， 在这里运行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div></pre></td></tr></table></figure>
 <p>噔噔噔，就有一个雏形了，再：</p>
