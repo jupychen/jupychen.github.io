@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://jupychen.mymark.top/"/>
-  <updated>2017-02-22T14:31:13.000Z</updated>
+  <updated>2017-09-23T14:32:36.000Z</updated>
   <id>http://jupychen.mymark.top/</id>
   
   <author>
@@ -14,6 +14,43 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Try minikube</title>
+    <link href="http://jupychen.mymark.top/2017/09/23/Try-minikube/"/>
+    <id>http://jupychen.mymark.top/2017/09/23/Try-minikube/</id>
+    <published>2017-09-23T20:42:50.000Z</published>
+    <updated>2017-09-23T14:32:36.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>在开发机（我用的是mac）上使用<code>kubernetes</code>，在此以记录。</p>
+<h3 id="安装minikube"><a href="#安装minikube" class="headerlink" title="安装minikube"></a>安装minikube</h3><p>这里选用<code>minikube</code><a href="https://github.com/kubernetes/minikube/" target="_blank" rel="external">minikube</a>。</p>
+<p>安装<code>minikube</code>前，需要安装一些虚拟机类的软件，我选用的的是<code>virtualbox</code><a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">virtualbox</a>。下载安装即可。</p>
+<p>然后就可以开始安装了。执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ brew cask install minikube</div></pre></td></tr></table></figure>
+<p>等待片刻，应当就能自动安装完成。<br>然后就可以将其运行起来了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ minikube start</div></pre></td></tr></table></figure>
+<p>初次应当会自动下载一个镜像并且会自动运行起来，打开<code>virtualbox</code>应当可以看到一个<code>running</code>状态的虚拟机。</p>
+<h3 id="使用kubernetes"><a href="#使用kubernetes" class="headerlink" title="使用kubernetes"></a>使用<code>kubernetes</code></h3><p>以上操作完成后，便可开始使用了，尝试执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ kubectl version</div></pre></td></tr></table></figure>
+<p>便可查看到<code>Client Version</code>和<code>Server Version</code>的相关消息，此后便可以正常使用了。</p>
+<p>暂时先到这里</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;在开发机（我用的是mac）上使用&lt;code&gt;kubernetes&lt;/code&gt;，在此以记录。&lt;/p&gt;
+&lt;h3 id=&quot;安装minikube&quot;&gt;&lt;a href=&quot;#安装minikube&quot; class=&quot;headerlink&quot; title=&quot;安装minikube&quot;&gt;&lt;/a&gt;安装
+    
+    </summary>
+    
+    
+      <category term="docker" scheme="http://jupychen.mymark.top/tags/docker/"/>
+    
+      <category term="kubernetes" scheme="http://jupychen.mymark.top/tags/kubernetes/"/>
+    
+      <category term="minikube" scheme="http://jupychen.mymark.top/tags/minikube/"/>
+    
+  </entry>
   
   <entry>
     <title>Try Hexo</title>

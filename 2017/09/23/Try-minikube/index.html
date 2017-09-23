@@ -3,14 +3,33 @@
 <head>
   <meta charset="utf-8">
   
-  <title>J</title>
+  <title>Try minikube | J</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="J">
-<meta property="og:url" content="http://jupychen.mymark.top/index.html">
+  <meta name="description" content="在开发机（我用的是mac）上使用kubernetes，在此以记录。
+安装minikube这里选用minikubeminikube。
+安装minikube前，需要安装一些虚拟机类的软件，我选用的的是virtualboxvirtualbox。下载安装即可。
+然后就可以开始安装了。执行：
+1$ brew cask install minikube
+等待片刻，应当就能自动安装完成。然后就可以将其运行起来了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Try minikube">
+<meta property="og:url" content="http://jupychen.mymark.top/2017/09/23/Try-minikube/index.html">
 <meta property="og:site_name" content="J">
+<meta property="og:description" content="在开发机（我用的是mac）上使用kubernetes，在此以记录。
+安装minikube这里选用minikubeminikube。
+安装minikube前，需要安装一些虚拟机类的软件，我选用的的是virtualboxvirtualbox。下载安装即可。
+然后就可以开始安装了。执行：
+1$ brew cask install minikube
+等待片刻，应当就能自动安装完成。然后就可以将其运行起来了">
+<meta property="og:updated_time" content="2017-09-23T14:32:36.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="J">
+<meta name="twitter:title" content="Try minikube">
+<meta name="twitter:description" content="在开发机（我用的是mac）上使用kubernetes，在此以记录。
+安装minikube这里选用minikubeminikube。
+安装minikube前，需要安装一些虚拟机类的软件，我选用的的是virtualboxvirtualbox。下载安装即可。
+然后就可以开始安装了。执行：
+1$ brew cask install minikube
+等待片刻，应当就能自动安装完成。然后就可以将其运行起来了">
   
     <link rel="alternate" href="/atom.xml" title="J" type="application/atom+xml">
   
@@ -59,9 +78,7 @@
   </div>
 </header>
       <div class="outer">
-        <section id="main">
-  
-    <article id="post-Try-minikube" class="article article-type-post" itemscope itemprop="blogPost">
+        <section id="main"><article id="post-Try-minikube" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2017/09/23/Try-minikube/" class="article-date">
   <time datetime="2017-09-23T20:42:50.000Z" itemprop="datePublished">2017-09-23</time>
@@ -74,8 +91,8 @@
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/09/23/Try-minikube/">Try minikube</a>
+    <h1 class="article-title" itemprop="name">
+      Try minikube
     </h1>
   
 
@@ -107,76 +124,19 @@
     </footer>
   </div>
   
-</article>
-
-
+    
+<nav id="article-nav">
   
-    <article id="post-Try-Hexo" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2017/02/22/Try-Hexo/" class="article-date">
-  <time datetime="2017-02-22T13:12:50.000Z" itemprop="datePublished">2017-02-22</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/22/Try-Hexo/">Try Hexo</a>
-    </h1>
+    <a href="/2017/02/22/Try-Hexo/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Try Hexo</div>
+    </a>
   
+</nav>
 
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>第一次使用<code>github.io</code>，也是第一次使用<code>hexo</code>，感觉很nice，几分钟就有一个博客了。</p>
-<h3 id="创建仓库"><a href="#创建仓库" class="headerlink" title="创建仓库"></a>创建仓库</h3><p>我的是<code>jupychen.github.io</code>，pull到本地，开始造起来！</p>
-<h3 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h3><p>这里用<code>docker</code>偷懒，写个<code>Dockerfile</code>。<br>内容是：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">FROM node:latest</div><div class="line">RUN npm install -g hexo</div><div class="line">WORKDIR /app</div></pre></td></tr></table></figure>
-<p><code>build</code>起来：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ docker build -t myhexo .</div></pre></td></tr></table></figure>
-<p>加个<code>alias</code>，记得<code>source</code>一下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">alias</span> hexo=<span class="string">'docker run --rm -v $(pwd):/app -t myhexo hexo'</span></div></pre></td></tr></table></figure>
-<h3 id="安装hexo-generator-feed"><a href="#安装hexo-generator-feed" class="headerlink" title="安装hexo-generator-feed"></a>安装<code>hexo-generator-feed</code></h3><p>为了实现feed订阅功能，生成<code>atom.xml</code>，需要安装<code>hexo-generator-feed</code>。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">docker run --rm -v $(<span class="built_in">pwd</span>):/app -t myhexo npm install hexo-generator-feed --save</div></pre></td></tr></table></figure>
-<p>执行完上述命令，在<code>node_modules</code>文件夹下就可以看到<code>hexo-generator-feed</code>已经安装成功。</p>
-<p>接着在<code>_config.yml</code>文件中添加：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">plugin:</div><div class="line">- hexo-generator-feed</div><div class="line">feed:</div><div class="line"><span class="built_in">type</span>: atom</div><div class="line">path: atom.xml</div><div class="line"><span class="built_in">limit</span>: 0</div><div class="line">hub:</div><div class="line">content:</div></pre></td></tr></table></figure>
-<p>有些主题自带<code>feed</code>的连接，没要的需要加上。（可以搜索主题的文档说明，feed连接是<code>/atom.xml</code>）。</p>
-<h3 id="开始写"><a href="#开始写" class="headerlink" title="开始写"></a>开始写</h3><p>新建一个文件夹<code>blog</code>， 在这里运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo init</div></pre></td></tr></table></figure>
-<p>噔噔噔，就有一个雏形了，再：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">'First Blog'</span></div></pre></td></tr></table></figure>
-<p>会发现<code>./source/</code>下多了一个md文件，然后就开始写作，写完运行一下：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>就有了<code>public</code>文件夹。</p>
-<h3 id="修改文章"><a href="#修改文章" class="headerlink" title="修改文章"></a>修改文章</h3><p>只需要修改<code>./source/</code>下的md文件，完成后运行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>就自动更新了<code>public</code>文件夹下的内容。</p>
-<h3 id="发布出去"><a href="#发布出去" class="headerlink" title="发布出去"></a>发布出去</h3><p>把最开始pull下来的<code>.git</code>文件夹放到<code>public</code>文件夹中，用git提交到你的github仓库（<code>jupychen.github.io</code>）里面，然后打开<a href="https://jupychen.github.io" target="_blank" rel="external">jupychen.github.io</a>，就能看到博客啦。</p>
-<h3 id="另外"><a href="#另外" class="headerlink" title="另外"></a>另外</h3><p>如果想要有自己的域名，就在<code>public</code>文件夹里加个<code>CNAME</code>文件，写入自己的域名，并将该域名<code>CNAME</code>解析到<code>jupychen.github.io</code>。</p>
-<p>打开<a href="http://jupychen.mymark.top">jupychen.mymark.top</a></p>
-<p>就酱！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://jupychen.mymark.top/2017/02/22/Try-Hexo/" data-id="cizh062pd000001pkyy0l1f48" class="article-share-link">Share</a>
-      
-      
-  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/docker/">docker</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/">hexo</a></li></ul>
-
-    </footer>
-  </div>
   
 </article>
-
-
-  
 
 </section>
         
