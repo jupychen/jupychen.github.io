@@ -801,7 +801,7 @@
     },
     {
         "type": "single",
-        "desc": "Machine Learning Specialist is working with a media company to perform classification on popular articles from the company's website. The company is using random forests to classify how popular an article will be before it is published. A sample of the data being used is below.<br><img src=\"\/assets\/media\/exam-media\/02833\/0002100001.png\" class=\"in-exam-image\"><br>Given the dataset, the Specialist wants to convert the Day_Of_Week column to binary values.<br>What technique should be used to convert this column to binary values?<br>",
+        "desc": "Machine Learning Specialist is working with a media company to perform classification on popular articles from the company's website. The company is using random forests to classify how popular an article will be before it is published. A sample of the data being used is below.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/02833\/0002100001.png\" class=\"in-exam-image\"><br>Given the dataset, the Specialist wants to convert the Day_Of_Week column to binary values.<br>What technique should be used to convert this column to binary values?<br>",
         "explanation": "Suggested Answer:B",
         "opts": [
             {
@@ -1095,7 +1095,7 @@
     },
     {
         "type": "mutiple",
-        "desc": "A Data Scientist is developing a machine learning model to classify whether a financial transaction is fraudulent. The labeled data available for training consists of<br>100,000 non-fraudulent observations and 1,000 fraudulent observations.<br>The Data Scientist applies the XGBoost algorithm to the data, resulting in the following confusion matrix when the trained model is applied to a previously unseen validation dataset. The accuracy of the model is 99.1%, but the Data Scientist has been asked to reduce the number of false negatives.<br><img src=\"\/assets\/media\/exam-media\/03614\/0003500001.jpg\" class=\"in-exam-image\"><br>Which combination of steps should the Data Scientist take to reduce the number of false positive predictions by the model? (Choose two.)<br>",
+        "desc": "A Data Scientist is developing a machine learning model to classify whether a financial transaction is fraudulent. The labeled data available for training consists of<br>100,000 non-fraudulent observations and 1,000 fraudulent observations.<br>The Data Scientist applies the XGBoost algorithm to the data, resulting in the following confusion matrix when the trained model is applied to a previously unseen validation dataset. The accuracy of the model is 99.1%, but the Data Scientist has been asked to reduce the number of false negatives.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0003500001.jpg\" class=\"in-exam-image\"><br>Which combination of steps should the Data Scientist take to reduce the number of false positive predictions by the model? (Choose two.)<br>",
         "explanation": "Suggested Answer:DE",
         "opts": [
             {
@@ -1185,7 +1185,7 @@
     },
     {
         "type": "single",
-        "desc": "A large mobile network operating company is building a machine learning model to predict customers who are likely to unsubscribe from the service. The company plans to offer an incentive for these customers as the cost of churn is far greater than the cost of the incentive.<br>The model produces the following confusion matrix after evaluating on a test dataset of 100 customers:<br><img src=\"\/assets\/media\/exam-media\/03614\/0000200001.png\" class=\"in-exam-image\"><br>Based on the model evaluation results, why is this a viable model for production?<br>",
+        "desc": "A large mobile network operating company is building a machine learning model to predict customers who are likely to unsubscribe from the service. The company plans to offer an incentive for these customers as the cost of churn is far greater than the cost of the incentive.<br>The model produces the following confusion matrix after evaluating on a test dataset of 100 customers:<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0000200001.png\" class=\"in-exam-image\"><br>Based on the model evaluation results, why is this a viable model for production?<br>",
         "explanation": "Suggested Answer:A",
         "opts": [
             {
@@ -1289,7 +1289,7 @@
     },
     {
         "type": "single",
-        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a machine learning specialist will build a binary classifier based on two features: age of account, denoted by x, and transaction month, denoted by y. The class distributions are illustrated in the provided figure. The positive class is portrayed in red, while the negative class is portrayed in black.<br><img src=\"\/assets\/media\/exam-media\/03614\/0005500001.png\" class=\"in-exam-image\"><br>Which model would have the HIGHEST accuracy?<br>",
+        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a machine learning specialist will build a binary classifier based on two features: age of account, denoted by x, and transaction month, denoted by y. The class distributions are illustrated in the provided figure. The positive class is portrayed in red, while the negative class is portrayed in black.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0005500001.png\" class=\"in-exam-image\"><br>Which model would have the HIGHEST accuracy?<br>",
         "explanation": "Suggested Answer:C",
         "opts": [
             {
@@ -1367,7 +1367,7 @@
     },
     {
         "type": "single",
-        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"\/assets\/media\/exam-media\/03614\/0001000001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST accuracy?<br>",
+        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0001000001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST accuracy?<br>",
         "explanation": "Suggested Answer:C",
         "opts": [
             {
@@ -1393,7 +1393,7 @@
     },
     {
         "type": "single",
-        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"\/assets\/media\/exam-media\/03614\/0001600001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST recall with respect to the fraudulent class?<br>",
+        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0001600001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST recall with respect to the fraudulent class?<br>",
         "explanation": "Suggested Answer:C",
         "opts": [
             {
@@ -1639,7 +1639,7 @@
     },
     {
         "type": "single",
-        "desc": "This graph shows the training and validation loss against the epochs for a neural network.<br>The network being trained is as follows:<br>\u2711 Two dense layers, one output neuron<br>\u2711 100 neurons in each layer<br>\u2711 100 epochs<br>Random initialization of weights<br><img src=\"\/assets\/media\/exam-media\/03614\/0005600004.png\" class=\"in-exam-image\"><br><img src=\"\/assets\/media\/exam-media\/03614\/0005700001.jpg\" class=\"in-exam-image\"><br>Which technique can be used to improve model performance in terms of accuracy in the validation set?<br>",
+        "desc": "This graph shows the training and validation loss against the epochs for a neural network.<br>The network being trained is as follows:<br>\u2711 Two dense layers, one output neuron<br>\u2711 100 neurons in each layer<br>\u2711 100 epochs<br>Random initialization of weights<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0005600004.png\" class=\"in-exam-image\"><br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0005700001.jpg\" class=\"in-exam-image\"><br>Which technique can be used to improve model performance in terms of accuracy in the validation set?<br>",
         "explanation": "Suggested Answer:C",
         "opts": [
             {
@@ -1795,7 +1795,7 @@
     },
     {
         "type": "single",
-        "desc": "A Machine Learning Specialist is attempting to build a linear regression model.<br><img src=\"\/assets\/media\/exam-media\/03614\/0005800001.jpg\" class=\"in-exam-image\"><br>Given the displayed residual plot only, what is the MOST likely problem with the model?<br>",
+        "desc": "A Machine Learning Specialist is attempting to build a linear regression model.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0005800001.jpg\" class=\"in-exam-image\"><br>Given the displayed residual plot only, what is the MOST likely problem with the model?<br>",
         "explanation": "Suggested Answer:D",
         "opts": [
             {
@@ -1907,7 +1907,7 @@
     },
     {
         "type": "mutiple",
-        "desc": "A Data Scientist is developing a machine learning model to classify whether a financial transaction is fraudulent. The labeled data available for training consists of<br>100,000 non-fraudulent observations and 1,000 fraudulent observations.<br>The Data Scientist applies the XGBoost algorithm to the data, resulting in the following confusion matrix when the trained model is applied to a previously unseen validation dataset. The accuracy of the model is 99.1%, but the Data Scientist needs to reduce the number of false negatives.<br><img src=\"\/assets\/media\/exam-media\/03614\/0007500001.png\" class=\"in-exam-image\"><br>Which combination of steps should the Data Scientist take to reduce the number of false negative predictions by the model? (Choose two.)<br>",
+        "desc": "A Data Scientist is developing a machine learning model to classify whether a financial transaction is fraudulent. The labeled data available for training consists of<br>100,000 non-fraudulent observations and 1,000 fraudulent observations.<br>The Data Scientist applies the XGBoost algorithm to the data, resulting in the following confusion matrix when the trained model is applied to a previously unseen validation dataset. The accuracy of the model is 99.1%, but the Data Scientist needs to reduce the number of false negatives.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0007500001.png\" class=\"in-exam-image\"><br>Which combination of steps should the Data Scientist take to reduce the number of false negative predictions by the model? (Choose two.)<br>",
         "explanation": "Suggested Answer:BD",
         "opts": [
             {
@@ -1937,7 +1937,7 @@
     },
     {
         "type": "single",
-        "desc": "Given the following confusion matrix for a movie classification model, what is the true class frequency for Romance and the predicted class frequency for<br>Adventure?<br><img src=\"\/assets\/media\/exam-media\/03614\/0005000001.png\" class=\"in-exam-image\"><br>",
+        "desc": "Given the following confusion matrix for a movie classification model, what is the true class frequency for Romance and the predicted class frequency for<br>Adventure?<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0005000001.png\" class=\"in-exam-image\"><br>",
         "explanation": "Suggested Answer:B",
         "opts": [
             {
@@ -2067,7 +2067,7 @@
     },
     {
         "type": "single",
-        "desc": "A data scientist wants to use Amazon Forecast to build a forecasting model for inventory demand for a retail company. The company has provided a dataset of historic inventory demand for its products as a .csv file stored in an Amazon S3 bucket. The table below shows a sample of the dataset.<br><img src=\"\/assets\/media\/exam-media\/03614\/0007300001.png\" class=\"in-exam-image\"><br>How should the data scientist transform the data?<br>",
+        "desc": "A data scientist wants to use Amazon Forecast to build a forecasting model for inventory demand for a retail company. The company has provided a dataset of historic inventory demand for its products as a .csv file stored in an Amazon S3 bucket. The table below shows a sample of the dataset.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0007300001.png\" class=\"in-exam-image\"><br>How should the data scientist transform the data?<br>",
         "explanation": "Suggested Answer:B",
         "opts": [
             {
@@ -2253,7 +2253,7 @@
     },
     {
         "type": "single",
-        "desc": "A data scientist must build a custom recommendation model in Amazon SageMaker for an online retail company. Due to the nature of the company's products, customers buy only 4-5 products every 5-10 years. So, the company relies on a steady stream of new customers. When a new customer signs up, the company collects data on the customer's preferences. Below is a sample of the data available to the data scientist.<br><img src=\"\/assets\/media\/exam-media\/03614\/0007900001.png\" class=\"in-exam-image\"><br>How should the data scientist split the dataset into a training and test set for this use case?<br>",
+        "desc": "A data scientist must build a custom recommendation model in Amazon SageMaker for an online retail company. Due to the nature of the company's products, customers buy only 4-5 products every 5-10 years. So, the company relies on a steady stream of new customers. When a new customer signs up, the company collects data on the customer's preferences. Below is a sample of the data available to the data scientist.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0007900001.png\" class=\"in-exam-image\"><br>How should the data scientist split the dataset into a training and test set for this use case?<br>",
         "explanation": "Suggested Answer:D",
         "opts": [
             {
@@ -2279,7 +2279,7 @@
     },
     {
         "type": "single",
-        "desc": "A Machine Learning Specialist prepared the following graph displaying the results of k-means for k = [1..10]:<br><img src=\"\/assets\/media\/exam-media\/03614\/0006200001.png\" class=\"in-exam-image\"><br>Considering the graph, what is a reasonable selection for the optimal choice of k?<br>",
+        "desc": "A Machine Learning Specialist prepared the following graph displaying the results of k-means for k = [1..10]:<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0006200001.png\" class=\"in-exam-image\"><br>Considering the graph, what is a reasonable selection for the optimal choice of k?<br>",
         "explanation": "Suggested Answer:C",
         "opts": [
             {
@@ -2391,7 +2391,7 @@
     },
     {
         "type": "single",
-        "desc": "A Data Scientist is building a linear regression model and will use resulting p-values to evaluate the statistical significance of each coefficient. Upon inspection of the dataset, the Data Scientist discovers that most of the features are normally distributed. The plot of one feature in the dataset is shown in the graphic.<br><img src=\"\/assets\/media\/exam-media\/03614\/0006500001.jpg\" class=\"in-exam-image\"><br>What transformation should the Data Scientist apply to satisfy the statistical assumptions of the linear regression model?<br>",
+        "desc": "A Data Scientist is building a linear regression model and will use resulting p-values to evaluate the statistical significance of each coefficient. Upon inspection of the dataset, the Data Scientist discovers that most of the features are normally distributed. The plot of one feature in the dataset is shown in the graphic.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0006500001.jpg\" class=\"in-exam-image\"><br>What transformation should the Data Scientist apply to satisfy the statistical assumptions of the linear regression model?<br>",
         "explanation": "Suggested Answer:A",
         "opts": [
             {
@@ -2417,7 +2417,7 @@
     },
     {
         "type": "single",
-        "desc": "A Machine Learning Specialist is assigned to a Fraud Detection team and must tune an XGBoost model, which is working appropriately for test data. However, with unknown data, it is not working as expected. The existing parameters are provided as follows.<br><img src=\"\/assets\/media\/exam-media\/03614\/0006600001.png\" class=\"in-exam-image\"><br>Which parameter tuning guidelines should the Specialist follow to avoid overfitting?<br>",
+        "desc": "A Machine Learning Specialist is assigned to a Fraud Detection team and must tune an XGBoost model, which is working appropriately for test data. However, with unknown data, it is not working as expected. The existing parameters are provided as follows.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0006600001.png\" class=\"in-exam-image\"><br>Which parameter tuning guidelines should the Specialist follow to avoid overfitting?<br>",
         "explanation": "Suggested Answer:B",
         "opts": [
             {
@@ -2499,7 +2499,7 @@
     },
     {
         "type": "single",
-        "desc": "A data scientist is developing a pipeline to ingest streaming web traffic data. The data scientist needs to implement a process to identify unusual web traffic patterns as part of the pipeline. The patterns will be used downstream for alerting and incident response. The data scientist has access to unlabeled historic data to use, if needed.<br>The solution needs to do the following:<br>\u2711 Calculate an anomaly score for each web traffic entry.<br>Adapt unusual event identification to changing web patterns over time.<br><img src=\"\/assets\/media\/exam-media\/03614\/0006600003.png\" class=\"in-exam-image\"><br>Which approach should the data scientist implement to meet these requirements?<br>",
+        "desc": "A data scientist is developing a pipeline to ingest streaming web traffic data. The data scientist needs to implement a process to identify unusual web traffic patterns as part of the pipeline. The patterns will be used downstream for alerting and incident response. The data scientist has access to unlabeled historic data to use, if needed.<br>The solution needs to do the following:<br>\u2711 Calculate an anomaly score for each web traffic entry.<br>Adapt unusual event identification to changing web patterns over time.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0006600003.png\" class=\"in-exam-image\"><br>Which approach should the data scientist implement to meet these requirements?<br>",
         "explanation": "Suggested Answer:A",
         "opts": [
             {
@@ -2603,7 +2603,7 @@
     },
     {
         "type": "single",
-        "desc": "The displayed graph is from a forecasting model for testing a time series.<br><img src=\"\/assets\/media\/exam-media\/03614\/0000900001.jpg\" class=\"in-exam-image\"><br>Considering the graph only, which conclusion should a Machine Learning Specialist make about the behavior of the model?<br>",
+        "desc": "The displayed graph is from a forecasting model for testing a time series.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0000900001.jpg\" class=\"in-exam-image\"><br>Considering the graph only, which conclusion should a Machine Learning Specialist make about the behavior of the model?<br>",
         "explanation": "Suggested Answer:A",
         "opts": [
             {
@@ -2789,7 +2789,7 @@
     },
     {
         "type": "single",
-        "desc": "Machine Learning Specialist is working with a media company to perform classification on popular articles from the company's website. The company is using random forests to classify how popular an article will be before it is published. A sample of the data being used is below.<br><img src=\"\/assets\/media\/exam-media\/03614\/0002100001.png\" class=\"in-exam-image\"><br>Given the dataset, the Specialist wants to convert the Day_Of_Week column to binary values.<br>What technique should be used to convert this column to binary values?<br>",
+        "desc": "Machine Learning Specialist is working with a media company to perform classification on popular articles from the company's website. The company is using random forests to classify how popular an article will be before it is published. A sample of the data being used is below.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/03614\/0002100001.png\" class=\"in-exam-image\"><br>Given the dataset, the Specialist wants to convert the Day_Of_Week column to binary values.<br>What technique should be used to convert this column to binary values?<br>",
         "explanation": "Suggested Answer:B",
         "opts": [
             {
@@ -2815,7 +2815,7 @@
     },
     {
         "type": "single",
-        "desc": "A large mobile network operating company is building a machine learning model to predict customers who are likely to unsubscribe from the service. The company plans to offer an incentive for these customers as the cost of churn is far greater than the cost of the incentive.<br>The model produces the following confusion matrix after evaluating on a test dataset of 100 customers:<br><img src=\"\/assets\/media\/exam-media\/02833\/0000200001.png\" class=\"in-exam-image\"><br>Based on the model evaluation results, why is this a viable model for production?<br>",
+        "desc": "A large mobile network operating company is building a machine learning model to predict customers who are likely to unsubscribe from the service. The company plans to offer an incentive for these customers as the cost of churn is far greater than the cost of the incentive.<br>The model produces the following confusion matrix after evaluating on a test dataset of 100 customers:<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/02833\/0000200001.png\" class=\"in-exam-image\"><br>Based on the model evaluation results, why is this a viable model for production?<br>",
         "explanation": "Suggested Answer:B",
         "opts": [
             {
@@ -2893,7 +2893,7 @@
     },
     {
         "type": "single",
-        "desc": "The displayed graph is from a forecasting model for testing a time series.<br><img src=\"\/assets\/media\/exam-media\/02833\/0000900001.jpg\" class=\"in-exam-image\"><br>Considering the graph only, which conclusion should a Machine Learning Specialist make about the behavior of the model?<br>",
+        "desc": "The displayed graph is from a forecasting model for testing a time series.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/02833\/0000900001.jpg\" class=\"in-exam-image\"><br>Considering the graph only, which conclusion should a Machine Learning Specialist make about the behavior of the model?<br>",
         "explanation": "Suggested Answer:D",
         "opts": [
             {
@@ -2997,7 +2997,7 @@
     },
     {
         "type": "single",
-        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"\/assets\/media\/exam-media\/02833\/0001600001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST recall with respect to the fraudulent class?<br>",
+        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/02833\/0001600001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST recall with respect to the fraudulent class?<br>",
         "explanation": "Suggested Answer:C",
         "opts": [
             {
@@ -3433,7 +3433,7 @@
     },
     {
         "type": "mutiple",
-        "desc": "A Data Scientist is developing a machine learning model to classify whether a financial transaction is fraudulent. The labeled data available for training consists of<br>100,000 non-fraudulent observations and 1,000 fraudulent observations.<br>The Data Scientist applies the XGBoost algorithm to the data, resulting in the following confusion matrix when the trained model is applied to a previously unseen validation dataset. The accuracy of the model is 99.1%, but the Data Scientist has been asked to reduce the number of false negatives.<br><img src=\"\/assets\/media\/exam-media\/02833\/0003500001.jpg\" class=\"in-exam-image\"><br>Which combination of steps should the Data Scientist take to reduce the number of false positive predictions by the model? (Choose two.)<br>",
+        "desc": "A Data Scientist is developing a machine learning model to classify whether a financial transaction is fraudulent. The labeled data available for training consists of<br>100,000 non-fraudulent observations and 1,000 fraudulent observations.<br>The Data Scientist applies the XGBoost algorithm to the data, resulting in the following confusion matrix when the trained model is applied to a previously unseen validation dataset. The accuracy of the model is 99.1%, but the Data Scientist has been asked to reduce the number of false negatives.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/02833\/0003500001.jpg\" class=\"in-exam-image\"><br>Which combination of steps should the Data Scientist take to reduce the number of false positive predictions by the model? (Choose two.)<br>",
         "explanation": "Suggested Answer:DE",
         "opts": [
             {
@@ -3567,7 +3567,7 @@
     },
     {
         "type": "single",
-        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"\/assets\/media\/exam-media\/02833\/0001000001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST accuracy?<br>",
+        "desc": "A company wants to classify user behavior as either fraudulent or normal. Based on internal research, a Machine Learning Specialist would like to build a binary classifier based on two features: age of account and transaction month. The class distribution for these features is illustrated in the figure provided.<br><img src=\"https:\/\/www.examtopics.com\/assets\/media\/exam-media\/02833\/0001000001.jpg\" class=\"in-exam-image\"><br>Based on this information, which model would have the HIGHEST accuracy?<br>",
         "explanation": "Suggested Answer:B Reference:https:\/\/machinelearningmastery.com\/logistic-regression-for-machine-learning\/",
         "opts": [
             {
