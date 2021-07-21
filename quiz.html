@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Quiz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="stylesheet" href="http://cdn.bootcss.com/bootstrap/3.3.4/css/bootstrap.min.css">
+</head>
+<body>
+
+<script type="module">
+  import { createApp, reactive, nextTick } from 'https://unpkg.com/petite-vue?module'
+  let questions = [];
+  let am = [ 2, 3, 5, 7, 11, 13, 17, 19, 23 ];
+  let checker = {
+    get doneCount() {
+      return this.doneQuestions.length
+    },
+    get doneQuestions()  {
+      return questions.filter(function(q, i) {
+        return q.hasOwnProperty('answer');
+      })
+    },
+    get correctQuestions() {
+      return questions.filter(function(q, i) {
+        let correctAns = checker.getAnswer(q);
+        return q.answer && q.answer == correctAns;
+      })
+    },
+    getAnswer(q) {
+      return q.opts.reduce(function(r, opt, ii) {
+        if (opt.correct === true || opt.correct === 'true' ) {
+          r *= am[ii] 
+        }
+        return r;
+      }, 1);
+    }
+
+  };
+
+  const quiz = reactive({
+    current: 0,
+    needRefresh: false,
+    fetchData() {
+      fetch(`questions.json`)
+        .then((res) => res.json())
+        .then((data) => {
+          nextTick(function() { questions = data; quiz.next() })
+        })
+    },
+    next() {
+      if (document.querySelector('#results') && !document.querySelector('#results').classList.contains('show_result')) {
+        this.confirm()
+        return
+      }
+      if (this.current < this.questions.length) {
+        this.current++
+        this.needRefresh = false
+        this.refresh()
+      }
+    },
+    pre() {
+      if (this.current > 1) {
+        this.current--
+        this.needRefresh = false
+        this.refresh()
+      }
+    },
+    confirm() {
+      let inputs = document.querySelectorAll("#results input[name=option]");
+      let r = 1;
+      for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) {
+          r *= am[i] 
+        }
+      }
+      questions[this.current - 1].answer = r
+      console.log(questions[this.current - 1]);
+      document.querySelector('#results').classList.add('show_result')
+    },
+    refresh() {
+      nextTick(function() { quiz.needRefresh = true })
+    },
+    get questions() {
+      return questions
+    },
+    get q() {
+      var currentQuestion = this.questions[this.current - 1]
+      currentQuestion.num = this.current
+      return currentQuestion
+    }
+  })
+
+  function QuestionItem(model) {
+    return {
+      $template: '#question-template',
+      model,
+      done: false
+    }
+  }
+
+  function OptionItem(model, type, k) {
+    return {
+      $template: '#option-template',
+      model,
+      type,
+      k,
+      done: false,
+      num(kk) {
+        return String.fromCharCode(65 + kk)
+      },
+      check(e) {
+        // var ele = e.srcElement
+        // var li = ele.parentNode.parentNode.parentNode
+        // if (ele.checked === false) {
+        //   li.classList.remove('list-group-item-danger') 
+        //   li.classList.remove('list-group-item-success')
+        // } else if (ele.dataset.correct === 'true') {
+        //   li.classList.add('list-group-item-success')
+        // } else {
+        //   li.classList.add('list-group-item-danger')
+        // }
+      }
+    }
+  }
+
+  createApp({ QuestionItem, OptionItem, quiz, checker }).mount()
+</script>
+
+<template id="question-template">
+  <div class="col-md-12">
+    <span style="color:red">FYI. 不对答案负责</span>
+  </div>
+  <div class="col-md-12">
+    <span :answer="checker.getAnswer(model)">[{{ model.type }}] 
+      <span v-html="model.desc"></span>
+    </span>
+  </div>
+  <div class="col-md-12 list-group-area">
+    <ul class="list-group">
+      <li v-for="(opt, k, i) in model.opts" class="list-group-item option" v-scope="OptionItem(opt, model.type, k)" :class="opt.correct ? 'correct' : 'wrong'">
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-12 hide explanation">
+    <span v-html="model.explanation"></span>
+    <hr>
+    <span v-html="model.firstComment"></span>
+  </div>
+  <div class="col-md-12"><a href="javascript:;">http://jupychen.mymark.top/quiz.html</a></div>
+</template>
+
+<template id="option-template">
+  <div :class="type === 'single' ? 'radio' : 'checkbox'">
+    <label>
+      <input :type="type === 'single' ? 'radio' : 'checkbox'" :value="model.correct" :data-correct="model.correct" @click="check" name="option">
+      {{ num(k) }}. {{ model.desc }}
+    </label>
+  </div>
+</template>
+
+<div class="container" v-scope v-effect="quiz.fetchData()">
+  <div class="quiz row panel panel-default" v-if="quiz.needRefresh">
+    <div class="panel-heading">
+    {{ quiz.current }} / {{ quiz.questions.length }}
+    <span class="pull-right">
+      <span style="color: #3c763d;">{{ checker.correctQuestions.length }}</span> +
+      <span style="color: #a94442;">{{ checker.doneCount - checker.correctQuestions.length }}</span>
+       = {{ checker.doneCount }}
+    </span>
+    </div>
+    <div v-scope="QuestionItem(quiz.q)" class="panel-body" id="results"></div>
+    <div class="panel-footer clearfix">
+      <button @click="quiz.pre" class="btn btn-default pull-left" v-show="quiz.current > 1">Previous</button>
+      <button @click="quiz.next" class="btn btn-default pull-right" v-show="quiz.current < quiz.questions.length">Next</button>
+      <button @click="quiz.confirm" class="btn btn-default confirm">Confirm</button>
+    </div>
+  </div>
+</div>
+<style>
+html, body {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+}
+
+.container {
+  min-height: 100%;
+  width: 100%;
+}
+.quiz.panel {
+  min-height: 100%;
+}
+.quiz .option {
+  padding-top:  0;
+  padding-bottom:  0;
+}
+
+#results.show_result .option.correct {
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+
+#results.show_result .option.wrong {
+  color: #a94442;
+  background-color: #f2dede;
+}
+#results.show_result .explanation {
+  display: block !important;
+}
+
+.quiz.panel .panel-footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 60px;
+  background-color: #f5f5f5;
+}
+.quiz.panel .panel-footer .confirm.btn {
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  position: absolute;
+  width: 80px;
+  display: inline-block;
+}
+
+.list-group-area {
+  margin-top: 20px;
+}
+.checkbox, .radio {
+  margin: 0px;
+}
+.list-group-item {
+  padding: 0px;
+}
+.checkbox label, .radio label {
+  display: inline-block;
+  padding: 10px 30px;
+  width: 100%;
+}
+
+</style>
+
+</body>
+</html>
