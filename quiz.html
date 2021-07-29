@@ -45,7 +45,11 @@
       fetch(`questions.json`)
         .then((res) => res.json())
         .then((data) => {
-          nextTick(function() { quiz.current = window.location.hash.substr(10) - 1; questions = data; quiz.next() })
+          nextTick(function() {
+            var current = window.location.hash.substr(10) - 1;
+            if (current > 0) quiz.current = current;
+            questions = data; quiz.next();
+          })
         })
     },
     next() {
@@ -56,6 +60,7 @@
       if (this.current < this.questions.length) {
         this.current++
         this.needRefresh = false
+        console.log(this.current);
         history.replaceState(null, null, document.location.pathname + '#question_' + this.current);
         this.refresh()
       }
@@ -85,7 +90,7 @@
     },
     checked(index) {
       var _answer = localStorage.getItem('answer_' + (quiz.current - 1));
-      console.log(_answer);
+      // console.log(_answer);
       if (!_answer) _answer = quiz.q.answer;
       return _answer % am[index] === 0;
     },
