@@ -45,17 +45,18 @@
       fetch(`questions.json`)
         .then((res) => res.json())
         .then((data) => {
-          nextTick(function() { questions = data; quiz.next() })
+          nextTick(function() { quiz.current = window.location.hash.substr(10) - 1; questions = data; quiz.next() })
         })
     },
     next() {
-      if (document.querySelector('#results') && !document.querySelector('#results').classList.contains('show_result')) {
+      if (document.querySelector('.results') && !document.querySelector('.results').classList.contains('show_result')) {
         this.confirm()
         return
       }
       if (this.current < this.questions.length) {
         this.current++
         this.needRefresh = false
+        history.replaceState(null, null, document.location.pathname + '#question_' + this.current);
         this.refresh()
       }
     },
@@ -67,7 +68,7 @@
       }
     },
     confirm() {
-      let inputs = document.querySelectorAll("#results input[name=option]");
+      let inputs = document.querySelectorAll(".results input[name=option]");
       let r = 1;
       for (var i = 0; i < inputs.length; i++) {
         if (inputs[i].checked) {
@@ -75,11 +76,21 @@
         }
       }
       questions[this.current - 1].answer = r
-      console.log(questions[this.current - 1]);
-      document.querySelector('#results').classList.add('show_result')
+      localStorage.setItem('answer_' + (this.current - 1), r)
+      // console.log(questions[this.current - 1]);
+      document.querySelector('.results').classList.add('show_result')
     },
     refresh() {
       nextTick(function() { quiz.needRefresh = true })
+    },
+    checked(index) {
+      var _answer = localStorage.getItem('answer_' + (quiz.current - 1));
+      console.log(_answer);
+      if (!_answer) _answer = quiz.q.answer;
+      return _answer % am[index] === 0;
+    },
+    answered(current) {
+      return localStorage.getItem('answer_' + (this.current - 1)) || quiz.q.answer
     },
     get questions() {
       return questions
@@ -90,6 +101,14 @@
       return currentQuestion
     }
   })
+
+  function Quiz(model) {
+    return {
+      $template: '#quiz-template',
+      model,
+      done: false
+    }
+  }
 
   function QuestionItem(model) {
     return {
@@ -124,7 +143,7 @@
     }
   }
 
-  createApp({ QuestionItem, OptionItem, quiz, checker }).mount()
+  createApp({ QuestionItem, OptionItem, Quiz, quiz, checker }).mount()
 </script>
 
 <template id="question-template">
@@ -153,28 +172,32 @@
 <template id="option-template">
   <div :class="type === 'single' ? 'radio' : 'checkbox'">
     <label>
-      <input :type="type === 'single' ? 'radio' : 'checkbox'" :value="model.correct" :data-correct="model.correct" @click="check" name="option">
+      <input :type="type === 'single' ? 'radio' : 'checkbox'" :value="model.correct" :data-correct="model.correct" @click="check" name="option" :checked="quiz.checked(k) ? 'checked' : ''">
       {{ num(k) }}. {{ model.desc }}
     </label>
+  </div>
+</template id="quiz-template">
+
+<template id="quiz-template">
+  <div class="panel-heading">
+  {{ quiz.current }} / {{ quiz.questions.length }}
+  <span class="pull-right">
+    <span style="color: #3c763d;">{{ checker.correctQuestions.length }}</span> +
+    <span style="color: #a94442;">{{ checker.doneCount - checker.correctQuestions.length }}</span>
+     = {{ checker.doneCount }}
+  </span>
+  </div>
+  <div v-scope="QuestionItem(quiz.q)" class="panel-body results" :class="quiz.answered(quiz.current) > 0 ? 'show_result' : ''"></div>
+  {{quiz.q.answer}}
+  <div class="panel-footer clearfix">
+    <button @click="quiz.pre" class="btn btn-default pull-left" v-show="quiz.current > 1">Previous</button>
+    <button @click="quiz.next" class="btn btn-default pull-right" v-show="quiz.current < quiz.questions.length">Next</button>
+    <button @click="quiz.confirm" class="btn btn-default confirm">Confirm</button>
   </div>
 </template>
 
 <div class="container" v-scope v-effect="quiz.fetchData()">
-  <div class="quiz row panel panel-default" v-if="quiz.needRefresh">
-    <div class="panel-heading">
-    {{ quiz.current }} / {{ quiz.questions.length }}
-    <span class="pull-right">
-      <span style="color: #3c763d;">{{ checker.correctQuestions.length }}</span> +
-      <span style="color: #a94442;">{{ checker.doneCount - checker.correctQuestions.length }}</span>
-       = {{ checker.doneCount }}
-    </span>
-    </div>
-    <div v-scope="QuestionItem(quiz.q)" class="panel-body" id="results"></div>
-    <div class="panel-footer clearfix">
-      <button @click="quiz.pre" class="btn btn-default pull-left" v-show="quiz.current > 1">Previous</button>
-      <button @click="quiz.next" class="btn btn-default pull-right" v-show="quiz.current < quiz.questions.length">Next</button>
-      <button @click="quiz.confirm" class="btn btn-default confirm">Confirm</button>
-    </div>
+  <div class="quiz row panel panel-default" v-if="quiz.needRefresh" v-scope="Quiz(quiz.q)">
   </div>
 </div>
 <style>
@@ -196,16 +219,16 @@ html, body {
   padding-bottom:  0;
 }
 
-#results.show_result .option.correct {
+.results.show_result .option.correct {
   color: #3c763d;
   background-color: #dff0d8;
 }
 
-#results.show_result .option.wrong {
+.results.show_result .option.wrong {
   color: #a94442;
   background-color: #f2dede;
 }
-#results.show_result .explanation {
+.results.show_result .explanation {
   display: block !important;
 }
 
@@ -242,7 +265,6 @@ html, body {
 img {
   max-width: 100%;
 }
-
 </style>
 
 </body>

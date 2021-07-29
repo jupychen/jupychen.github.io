@@ -3694,12 +3694,5 @@
         "firstComment": "D is correct. Question has '\"simple transformations, and some attributes will be combined\" and Least development effort. Kinesis analytics can get data from Firehose, transform and write to S3<br>https:\/\/docs.aws.amazon.com\/kinesisanalytics\/latest\/java\/examples-s3.html",
         "url": "https:\/\/www.examtopics.com\/discussions\/amazon\/view\/9826-exam-aws-certified-machine-learning-specialty-topic-1\/",
         "id": 9826
-    },
-    {
-        "type": "mutiple",
-        "explanation": "",
-        "opts": [],
-        "firstComment": "",
-        "url": "https:\/\/www.examtopics.com\/discussions\/amazon\/282\/"
     }
 ]
