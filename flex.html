@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FLEX</title>
+</head>
+<body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        hr {
+            margin: 1rem 0;
+        }
+        .container {
+            min-height: 10rem;
+            width: 100%;
+            background: #99daf3;
+            display: flex;
+        }
+        .item {
+            height: 5rem;
+            width: 8rem;
+            background: #2645f6;
+            text-align: center;
+            font-size: 3rem;
+            color: #99daf3;
+        }
+        #picked {
+            color: #d23e3e;
+        }
+    </style>
+    <script>
+        const change = (e) => {
+            document.querySelector('.container').style[e.name] = e.value;
+        };
+        const changePicked = (e) => {
+            document.querySelector('#picked').style[e.name] = e.value;
+        };
+    </script>
+    <style>
+        .panel div {
+            display: flex;
+            padding: .2rem;
+        }
+        .panel  .label {
+            width: 7rem;
+        }
+    </style>
+    <form class="panel" autocomplete="off">
+        <div>
+            <span class="label">flex-direction: </span><select name="flexDirection" onchange="change(this)">
+                <option value="row">row</option>
+                <option value="row-reverse">row-reverse</option>
+                <option value="column">column</option>
+                <option value="column-reverse">column-reverse</option>
+            </select>
+        </div>
+        <div>
+            <span class="label">flex-wrap: </span><select name="flexWrap" onchange="change(this)">
+                <option value="nowrap">nowrap</option>
+                <option value="wrap">wrap</option>
+                <option value="wrap-reverse">wrap-reverse</option>
+            </select>
+        </div>
+        <div>
+            <span class="label">justify-content: </span><select name="justifyContent" onchange="change(this)">
+                <option value="flex-start">flex-start</option>
+                <option value="flex-end">flex-end</option>
+                <option value="center">center</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+                <option value="stretch">stretch</option>
+                <option value="initial">initial</option>
+                <option value="inherit">inherit</option>
+                <option value="unset">unset</option>
+                <option value="revert">revert</option>
+                <option value="revert-layer">revert-layer</option>
+            </select>
+        </div>
+        <div>
+            <span class="label">align-items: </span><select name="alignItems" onchange="change(this)">
+                <option value="flex-start">flex-start</option>
+                <option value="flex-end">flex-end</option>
+                <option value="center">center</option>
+                <option value="baseline">baseline</option>
+                <option value="initial">initial</option>
+                <option value="inherit">inherit</option>
+                <option value="unset">unset</option>
+                <option value="revert">revert</option>
+                <option value="revert-layer">revert-layer</option>
+                <option value="normal">normal</option>
+                <option value="none">none</option>
+                <option value="stretch">stretch</option>
+            </select>
+        </div>
+        <div>
+            <span class="label">align-content: </span><select name="alignContent" onchange="change(this)">
+                <option value="flex-start">flex-start</option>
+                <option value="flex-end">flex-end</option>
+                <option value="center">center</option>
+                <option value="space-between">space-between</option>
+                <option value="space-around">space-around</option>
+                <option value="space-evenly">space-evenly</option>
+                <option value="stretch">stretch</option>
+                <option value="initial">initial</option>
+                <option value="inherit">inherit</option>
+                <option value="unset">unset</option>
+                <option value="revert">revert</option>
+                <option value="revert-layer">revert-layer</option>
+                <option value="normal">normal</option>
+                <option value="none">none</option>
+                <option value="baseline">baseline</option>
+            </select>
+        </div>
+        <div>
+            <span class="label">flex-flow: </span>flex-direction + flex-wrap
+        </div>
+        <hr>
+        <div>
+            <span class="label">order: </span><input type="number" name="order" onchange="changePicked(this)">
+        </div>
+        <div>
+            <span class="label">flex-grow: </span><input type="number" name="flexGrow" onchange="changePicked(this)">
+        </div>
+        <div>
+            <span class="label">flex-shrink: </span><input type="number" name="flexShrink" onchange="changePicked(this)">
+        </div>
+        <div>
+            <span class="label">flex-basis: </span><input type="number" name="flexBasis" onchange="changePicked(this)">
+        </div>
+        <div>
+            <span class="label">flex: </span>flex-grow + flex-shrink + flex-basis
+        </div>
+        <div>
+            <span class="label">align-self: </span><select name="alignSelf" onchange="changePicked(this)">
+                <option value="auto">auto</option>
+                <option value="flex-start">flex-start</option>
+                <option value="flex-end">flex-end</option>
+                <option value="center">center</option>
+                <option value="baseline">baseline</option>
+                <option value="initial">initial</option>
+                <option value="inherit">inherit</option>
+                <option value="unset">unset</option>
+                <option value="revert">revert</option>
+                <option value="revert-layer">revert-layer</option>
+                <option value="normal">normal</option>
+                <option value="none">none</option>
+                <option value="stretch">stretch</option>
+            </select>
+        </div>
+
+    </form>
+    <div class="container">
+        <div class="item" style="order: 1">1</div>
+        <div class="item" style="order: 2">2</div>
+        <div class="item" style="order: 3" id="picked">3</div>
+        <div class="item" style="order: 4">4</div>
+        <div class="item" style="order: 5">5</div>
+        <div class="item" style="order: 6">6</div>
+        <div class="item" style="order: 7">7</div>
+        <div class="item" style="order: 8">8</div>
+    </div>
+
+    <hr>
+
+    <style>
+        .nav {
+            display:flex;
+            background: #99daf3;
+        }
+        .nav .btn {
+            flex: 0 0 1rem;
+            height: 3rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .nav .content {
+            flex: 1 1 auto;
+            text-align: center;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+    <div class="nav">
+        <div class="btn">a</div>
+        <div class="content">kind of long</div>
+        <div class="btn">a</div>
+    </div>
+    <hr>
+    <style>
+        .search {
+            display: flex;
+            background: #99daf3;
+            width: 10rem;
+        }
+        .search .input {
+            flex: 1 0 5rem;
+        }
+        .search .btn {
+            flex: 0 0 1rem;
+        }
+    </style>
+    <div class="search">
+        <div class="input">text input</div>
+        <div class="btn">o</div>
+    </div>
+
+    <hr>
+    <style>
+        .list {
+            display: flex;
+            flex-flow: row wrap;
+            width: 100%;
+            justify-content: center;
+            align-items: center;
+            background: #99daf3;
+        }
+        .list .box {
+            /* width: 25%; */
+            height: 3rem;
+            background: #2645f6;
+            border: #99daf3 solid 1rem;
+            flex: 0 0 25%;
+        }
+    </style>
+    <div class="list">
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+        <div class="box"></div>
+    </div>
+    <div>
+        <div class="have-prefix" data-prefix="Hello">World!</div>
+        <style>
+            .have-prefix::before {
+                content: attr(data-prefix);
+            }
+        </style>
+    </div>
+</body>
+</html>
