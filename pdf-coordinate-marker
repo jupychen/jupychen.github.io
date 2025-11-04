@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PDF Coordinate Marker - Jupy</title>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        padding: 0;
+        color: #333;
+      }
+      .container {
+        max-width: 100%;
+        margin: 0;
+        background-color: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+
+      header {
+        background: linear-gradient(90deg, #4b6cb7 0%, #182848 100%);
+        color: white;
+        padding: 10px 30px;
+        text-align: center;
+      }
+
+      h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .subtitle {
+        font-size: 1rem;
+        opacity: 0.9;
+        font-weight: 300;
+      }
+
+      .content {
+        display: flex;
+        flex-direction: row;
+        min-height: 600px;
+      }
+
+      .pdf-section {
+        flex: 3;
+        padding: 20px;
+        border-right: 1px solid #eaeaea;
+        min-width: 0;
+      }
+      .controls {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 20px;
+      }
+
+      .file-input {
+        flex: 1;
+        padding: 10px;
+        border: 2px dashed #4b6cb7;
+        border-radius: 8px;
+        background-color: #f8f9ff;
+        font-size: 1rem;
+        cursor: pointer;
+      }
+
+      .btn {
+        padding: 10px 20px;
+        background: #4b6cb7;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+
+      .btn:hover {
+        background: #3a5795;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .pdf-container {
+        position: relative;
+        width: 100%;
+        min-height: 70vh;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: auto;
+        background-color: #f9f9f9;
+      }
+
+      #pdf-canvas {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      }
+
+      #grid-canvas {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .coordinates-section {
+        flex: 1;
+        padding: 20px;
+        background-color: #f8f9ff;
+        overflow-y: auto;
+      }
+
+      .coordinates-list {
+        margin-top: 20px;
+        max-height: 90vh;
+        overflow-y: auto;
+      }
+
+      .coordinate-item {
+        background-color: white;
+        padding: 5px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        border-left: 4px solid #4b6cb7;
+      }
+
+      .coordinate-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+      }
+
+      .coordinate-name {
+        font-weight: 600;
+        color: #4b6cb7;
+      }
+
+      .coordinate-values {
+        font-size: 0.9rem;
+        color: #666;
+      }
+
+      .delete-btn {
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 0.8rem;
+      }
+
+      .delete-btn:hover {
+        background: #ff5252;
+      }
+
+      .copy-btn {
+        background: #4b6cb7;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 4px 8px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        margin-right: 5px;
+      }
+
+      .copy-btn:hover {
+        background: #3a5795;
+      }
+
+      .coordinate-actions {
+        display: flex;
+        align-items: center;
+      }
+
+      .instructions {
+        margin-top: 20px;
+        padding: 15px;
+        background-color: #e8f4fd;
+        border-radius: 8px;
+        font-size: 0.9rem;
+        line-height: 1.5;
+      }
+
+      .instructions h3 {
+        color: #4b6cb7;
+        margin-bottom: 8px;
+      }
+
+      .helper-line {
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .h-helper-line {
+        border-top: 1px dotted #ff6b6b;
+      }
+      .v-helper-line {
+        border-left: 1px dotted #ff6b6b;
+      }
+
+      .point-marker {
+        position: absolute;
+        width: 12px;
+        height: 12px;
+        background-color: #ff6b6b;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+        transform: translate(-50%, -50%);
+        pointer-events: auto;
+        cursor: grab;
+      }
+
+      .point-marker:active {
+        cursor: grabbing;
+      }
+
+      .point-label {
+        position: absolute;
+        background-color: rgba(255, 107, 107, 0.9);
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        transform: translate(10px, -10px);
+        pointer-events: none;
+        white-space: nowrap;
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #888;
+      }
+
+      .empty-state i {
+        font-size: 3rem;
+        margin-bottom: 15px;
+        display: block;
+        color: #ccc;
+      }
+
+      footer {
+        text-align: center;
+        padding: 15px;
+        color: #666;
+        font-size: 0.9rem;
+        border-top: 1px solid #eaeaea;
+        background-color: #f8f9fa;
+      }
+
+      @media (max-width: 900px) {
+        .content {
+          flex-direction: column;
+        }
+
+        .pdf-section {
+          min-width: 100%;
+          border-right: none;
+          border-bottom: 1px solid #eaeaea;
+        }
+
+        .coordinates-section {
+          flex: 1;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app">
+      <div class="container">
+        <header>
+          <h1>PDF Coordinate Marker</h1>
+          <p class="subtitle">
+            Upload a PDF, click to mark points, and record coordinates - Jupy
+          </p>
+        </header>
+
+        <div class="content">
+          <div class="pdf-section">
+            <div class="controls">
+              <input
+                type="file"
+                @change="handlePDFUpload"
+                class="file-input"
+                accept=".pdf"
+              />
+              <button @click="zoom(1.2)" class="btn">+</button>
+              <button @click="zoom(0.8)" class="btn">-</button>
+              <button @click="clearAllCoordinates" class="btn">
+                Clear All
+              </button>
+            </div>
+
+            <div
+              v-if="lastPdfInfo.name"
+              class="instructions"
+              style="margin-bottom: 10px"
+            >
+              You last viewed <strong>{{ lastPdfInfo.name }}</strong>. Upload it
+              again to restore your saved points.
+            </div>
+
+            <div class="pdf-container" ref="pdfContainer">
+              <div v-if="!pdfDoc" class="empty-state">
+                <i>📄</i>
+                <p>Upload a PDF file to get started</p>
+              </div>
+              <canvas
+                ref="pdfCanvas"
+                @dblclick="handleCanvasClick"
+                :style="{ display: pdfDoc ? 'block' : 'none' }"
+              ></canvas>
+              <canvas ref="gridCanvas" id="grid-canvas"></canvas>
+              <template v-if="pdfDoc">
+                <div
+                  v-for="coordinate in coordinates"
+                  :key="coordinate.id + '-h-line'"
+                  class="helper-line h-helper-line"
+                  :data-id="coordinate.id"
+                  :style="getHLineStyle(coordinate)"
+                ></div>
+                <div
+                  v-for="coordinate in coordinates"
+                  :key="coordinate.id + '-v-line'"
+                  class="helper-line v-helper-line"
+                  :data-id="coordinate.id"
+                  :style="getVLineStyle(coordinate)"
+                ></div>
+                <div
+                  v-for="coordinate in coordinates"
+                  :key="coordinate.id"
+                  class="point-marker"
+                  :data-id="coordinate.id"
+                  :style="getMarkerStyle(coordinate)"
+                  @mousedown="startDrag($event, coordinate)"
+                ></div>
+                <div
+                  v-for="coordinate in coordinates"
+                  :key="coordinate.id"
+                  class="point-label"
+                  :style="getLabelStyle(coordinate)"
+                >
+                  {{ coordinate.name }} ({{ round(coordinate.pdfX) }}, {{
+                  round(coordinate.pdfY) }})
+                </div>
+                <div
+                  v-for="coordinate in coordinates"
+                  class="helper-line"
+                  :key="coordinate.id"
+                  style="top: 0px; left: 130.5px; height: 1263px"
+                ></div>
+                <div
+                  v-for="coordinate in coordinates"
+                  class="helper-line"
+                  :key="coordinate.id"
+                  style="top: 0px; left: 130.5px; height: 1263px"
+                ></div>
+              </template>
+            </div>
+          </div>
+
+          <div class="coordinates-section">
+            <h2>Marked Coordinates</h2>
+            <div class="coordinates-list">
+              <div v-if="coordinates.length === 0" class="empty-state">
+                <i>📍</i>
+                <p>No coordinates marked yet</p>
+                <p>Click on the PDF to add points</p>
+              </div>
+              <div
+                v-for="coordinate in coordinates"
+                :key="coordinate.id"
+                class="coordinate-item"
+              >
+                <div class="coordinate-header">
+                  <div>
+                    <p
+                      class="coordinate-name"
+                      contenteditable="true"
+                      @blur="handleNameChange($event, coordinate)"
+                      @keydown.enter.prevent="$event.target.blur()"
+                    >
+                      {{ coordinate.name }}
+                    </p>
+                    <p class="coordinate-values">
+                      (X:
+                      <span
+                        class="coordinate-value"
+                        contenteditable="true"
+                        @blur="handleCoordinateValueChange($event, coordinate, 'pdfX')"
+                        @keydown="handleCoordinateValueKeyDown($event, coordinate, 'pdfX')"
+                        >{{ round(coordinate.pdfX) }}</span
+                      >, Y:
+                      <span
+                        class="coordinate-value"
+                        contenteditable="true"
+                        @blur="handleCoordinateValueChange($event, coordinate, 'pdfY')"
+                        @keydown="handleCoordinateValueKeyDown($event, coordinate, 'pdfY')"
+                        >{{ round(coordinate.pdfY) }}</span
+                      >)
+                    </p>
+                  </div>
+                  <div class="coordinate-actions">
+                    <button
+                      class="copy-btn"
+                      @click="copyCoordinate(coordinate, $event)"
+                    >
+                      Copy
+                    </button>
+                    <button
+                      class="delete-btn"
+                      @click="deleteCoordinate(coordinate.id)"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="instructions">
+              <h3>How to use:</h3>
+              <ol>
+                <li>Upload a PDF file using the button above</li>
+                <li>Double-click anywhere on the PDF to mark a point</li>
+                <li>Click on a point's name in the list to edit it</li>
+                <li>View coordinates on the right (0,0 is bottom-left)</li>
+                <li>Drag points to move them</li>
+                <li>Delete points using the "Delete" button</li>
+              </ol>
+            </div>
+          </div>
+        </div>
+
+        <footer>
+          <p>PDF Coordinate Marker Created by Jupy</p>
+        </footer>
+      </div>
+    </div>
+
+    <script>
+      const { createApp, ref, onMounted, nextTick, computed, markRaw } = Vue;
+
+      createApp({
+        setup() {
+          pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js";
+
+          const pdfDoc = ref(null);
+          const pageNum = ref(1);
+          const scale = ref(1.5);
+          const coordinates = ref([]);
+          const pdfCanvas = ref(null);
+          const gridCanvas = ref(null);
+          const pdfContainer = ref(null);
+          const activeDrag = ref(null);
+          const currentViewport = ref(null);
+          const currentPdfId = ref(null);
+          const lastPdfInfo = ref({});
+
+          const round = (value) => Math.round(value);
+
+          const resetState = () => {
+            coordinates.value = [];
+          };
+
+          const handlePDFUpload = (event) => {
+            const file = event.target.files[0];
+            if (file && file.type === "application/pdf") {
+              resetState();
+              currentPdfId.value = `pdf-coords-${file.name}-${file.size}-${file.lastModified}`;
+              loadStateFromStorage();
+              const fileReader = new FileReader();
+
+              fileReader.onload = function () {
+                const typedArray = new Uint8Array(this.result);
+                loadPDF(typedArray).then(() => {
+                  lastPdfInfo.value = { name: file.name };
+                  localStorage.setItem(
+                    "lastPdfInfo",
+                    JSON.stringify(lastPdfInfo.value)
+                  );
+                });
+              };
+
+              fileReader.readAsArrayBuffer(file);
+            } else {
+              alert("Please select a valid PDF file.");
+            }
+          };
+
+          const loadPDF = (data) => {
+            return pdfjsLib
+              .getDocument(data)
+              .promise.then((pdf) => {
+                pdfDoc.value = markRaw(pdf);
+                renderPage(pageNum.value);
+              })
+              .catch((error) => {
+                console.error("Error loading PDF:", error);
+                alert("Error loading PDF. Please try another file.");
+                throw error;
+              });
+          };
+
+          const renderPage = (num) => {
+            pdfDoc.value.getPage(num).then((page) => {
+              const viewport = page.getViewport({ scale: scale.value });
+              currentViewport.value = markRaw(viewport);
+              const canvas = pdfCanvas.value;
+              const context = canvas.getContext("2d");
+              canvas.height = viewport.height;
+              canvas.width = viewport.width;
+
+              const renderContext = {
+                canvasContext: context,
+                viewport: viewport,
+              };
+
+              page.render(renderContext).promise.then(() => {
+                nextTick(() => {
+                  drawGrid();
+                });
+              });
+            });
+          };
+
+          const drawGrid = () => {
+            if (!currentViewport.value) return;
+            const canvas = gridCanvas.value;
+            const context = canvas.getContext("2d");
+            const pdfCanvasEl = pdfCanvas.value;
+
+            canvas.width = pdfCanvasEl.width;
+            canvas.height = pdfCanvasEl.height;
+            canvas.style.left = pdfCanvasEl.offsetLeft + "px";
+            canvas.style.top = pdfCanvasEl.offsetTop + "px";
+
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.strokeStyle = "rgba(0, 0, 255, 0.2)";
+            context.fillStyle = "rgba(0, 0, 0, 0.5)";
+            context.font = "10px Arial";
+            context.lineWidth = 0.5;
+            const step = 50 * scale.value;
+
+            for (let x = 0; x < canvas.width; x += step) {
+              const pdfPoint = currentViewport.value.convertToPdfPoint(x, 0);
+              const pdfX = round(pdfPoint[0]);
+              context.beginPath();
+              context.moveTo(x, 0);
+              context.lineTo(x, canvas.height);
+              context.stroke();
+              context.fillText(pdfX, x + 2, 10);
+            }
+
+            for (let y = 0; y < canvas.height; y += step) {
+              const pdfPoint = currentViewport.value.convertToPdfPoint(0, y);
+              const pdfY = round(pdfPoint[1]);
+              context.beginPath();
+              context.moveTo(0, y);
+              context.lineTo(canvas.width, y);
+              context.stroke();
+              context.fillText(pdfY, 2, y - 2);
+            }
+          };
+
+          const handleCanvasClick = (event) => {
+            if (!pdfDoc.value || !currentViewport.value) return;
+            const rect = pdfCanvas.value.getBoundingClientRect();
+            const canvasX = event.clientX - rect.left;
+            const canvasY = event.clientY - rect.top;
+
+            const pdfPoint = currentViewport.value.convertToPdfPoint(
+              canvasX,
+              canvasY
+            );
+            const x = round(pdfPoint[0]);
+            const y = round(pdfPoint[1]);
+            const pointName = `${x},${y}`;
+            addCoordinate(pointName, pdfPoint[0], pdfPoint[1]);
+          };
+
+          const addCoordinate = (name, pdfX, pdfY) => {
+            const coordinate = {
+              id: Date.now(),
+              name: name,
+              pdfX: pdfX,
+              pdfY: pdfY,
+            };
+            coordinates.value.push(coordinate);
+            saveStateToStorage();
+          };
+
+          const deleteCoordinate = (id) => {
+            coordinates.value = coordinates.value.filter(
+              (coord) => coord.id !== id
+            );
+            saveStateToStorage();
+          };
+
+          const copyCoordinate = (coordinate, event) => {
+            const { name, pdfX, pdfY } = coordinate;
+            const x = round(pdfX);
+            const y = round(pdfY);
+            const jsonString = JSON.stringify({ name, x, y });
+            navigator.clipboard.writeText(jsonString).then(() => {
+              const button = event.target;
+              const originalText = button.textContent;
+              button.textContent = "Copied!";
+              setTimeout(() => {
+                button.textContent = originalText;
+              }, 1000);
+            });
+          };
+
+          const clearAllCoordinates = () => {
+            resetState();
+            saveStateToStorage();
+          };
+
+          const handleNameChange = (event, coordinate) => {
+            const newName = event.target.textContent;
+            if (coordinate.name !== newName) {
+              coordinate.name = newName;
+              saveStateToStorage();
+            }
+          };
+
+          const handleCoordinateValueChange = (event, coordinate, axis) => {
+            const newValue = parseFloat(event.target.textContent);
+            if (coordinate && !isNaN(newValue)) {
+              coordinate[axis] = newValue;
+              saveStateToStorage();
+            }
+            event.target.textContent = round(coordinate[axis]);
+          };
+
+          const handleCoordinateValueKeyDown = (event, coordinate, axis) => {
+            if (event.key === "Enter") {
+              event.preventDefault();
+              event.target.blur();
+              return;
+            }
+
+            const arrowKeys = [
+              "ArrowUp",
+              "ArrowDown",
+              "ArrowLeft",
+              "ArrowRight",
+            ];
+            if (arrowKeys.includes(event.key)) {
+              event.preventDefault();
+
+              const currentValue = parseFloat(event.target.textContent);
+              if (!isNaN(currentValue)) {
+                coordinate[axis] = currentValue;
+              }
+
+              const increment = event.shiftKey ? 10 : 1;
+
+              switch (event.key) {
+                case "ArrowUp":
+                  if (axis === "pdfY") coordinate.pdfY += increment;
+                  break;
+                case "ArrowDown":
+                  if (axis === "pdfY") coordinate.pdfY -= increment;
+                  break;
+                case "ArrowRight":
+                  if (axis === "pdfX") coordinate.pdfX += increment;
+                  break;
+                case "ArrowLeft":
+                  if (axis === "pdfX") coordinate.pdfX -= increment;
+                  break;
+              }
+
+              event.target.textContent = round(coordinate[axis]);
+              saveStateToStorage();
+            }
+          };
+
+          const saveStateToStorage = () => {
+            if (currentPdfId.value) {
+              localStorage.setItem(
+                currentPdfId.value,
+                JSON.stringify(coordinates.value)
+              );
+            }
+          };
+
+          const loadStateFromStorage = () => {
+            if (currentPdfId.value) {
+              const savedCoords = localStorage.getItem(currentPdfId.value);
+              if (savedCoords) {
+                try {
+                  const parsedCoords = JSON.parse(savedCoords);
+                  if (Array.isArray(parsedCoords)) {
+                    coordinates.value = parsedCoords;
+                  }
+                } catch (e) {
+                  console.error(
+                    "Error parsing coordinates from localStorage",
+                    e
+                  );
+                }
+              }
+            }
+          };
+
+          const startDrag = (e, coordinate) => {
+            activeDrag.value = {
+              id: coordinate.id,
+              coord: coordinate,
+            };
+            pdfContainer.value.style.cursor = "grabbing";
+            document.addEventListener("mousemove", drag);
+            document.addEventListener("mouseup", endDrag);
+          };
+
+          const drag = (e) => {
+            if (!activeDrag.value || !currentViewport.value) return;
+            e.preventDefault();
+            const rect = pdfCanvas.value.getBoundingClientRect();
+            const canvasX = e.clientX - rect.left;
+            const canvasY = e.clientY - rect.top;
+
+            const pdfPoint = currentViewport.value.convertToPdfPoint(
+              canvasX,
+              canvasY
+            );
+
+            const draggedCoord = coordinates.value.find(
+              (c) => c.id === activeDrag.value.id
+            );
+            if (draggedCoord) {
+              draggedCoord.pdfX = pdfPoint[0];
+              draggedCoord.pdfY = pdfPoint[1];
+            }
+          };
+
+          const endDrag = () => {
+            if (activeDrag.value) {
+              pdfContainer.value.style.cursor = "default";
+              saveStateToStorage();
+              activeDrag.value = null;
+              document.removeEventListener("mousemove", drag);
+              document.removeEventListener("mouseup", endDrag);
+            }
+          };
+
+          const zoom = (factor) => {
+            if (!pdfDoc.value) return;
+            scale.value *= factor;
+            renderPage(pageNum.value);
+          };
+
+          const getMarkerStyle = (coordinate) => {
+            if (!currentViewport.value) return {};
+            const canvasPoint = currentViewport.value.convertToViewportPoint(
+              coordinate.pdfX,
+              coordinate.pdfY
+            );
+            const canvasX = canvasPoint[0];
+            const canvasY = canvasPoint[1];
+            const canvasOffsetLeft = pdfCanvas.value.offsetLeft;
+            const canvasOffsetTop = pdfCanvas.value.offsetTop;
+            return {
+              left: `${canvasOffsetLeft + canvasX}px`,
+              top: `${canvasOffsetTop + canvasY}px`,
+            };
+          };
+
+          const getLabelStyle = (coordinate) => {
+            if (!currentViewport.value) return {};
+            const canvasPoint = currentViewport.value.convertToViewportPoint(
+              coordinate.pdfX,
+              coordinate.pdfY
+            );
+            const canvasX = canvasPoint[0];
+            const canvasY = canvasPoint[1];
+            const canvasOffsetLeft = pdfCanvas.value.offsetLeft;
+            const canvasOffsetTop = pdfCanvas.value.offsetTop;
+            return {
+              left: `${canvasOffsetLeft + canvasX - 2}px`,
+              top: `${canvasOffsetTop + canvasY - 12}px`,
+            };
+          };
+
+          const getHLineStyle = (coordinate) => {
+            if (!currentViewport.value) return {};
+            const canvasPoint = currentViewport.value.convertToViewportPoint(
+              coordinate.pdfX,
+              coordinate.pdfY
+            );
+            const canvasY = canvasPoint[1];
+            const canvasOffsetLeft = pdfCanvas.value.offsetLeft;
+            const canvasOffsetTop = pdfCanvas.value.offsetTop;
+            return {
+              left: `${canvasOffsetLeft}px`,
+              top: `${canvasOffsetTop + canvasY}px`,
+              width: `${pdfCanvas.value.width}px`,
+            };
+          };
+
+          const getVLineStyle = (coordinate) => {
+            if (!currentViewport.value) return {};
+            const canvasPoint = currentViewport.value.convertToViewportPoint(
+              coordinate.pdfX,
+              coordinate.pdfY
+            );
+            const canvasX = canvasPoint[0];
+            const canvasOffsetLeft = pdfCanvas.value.offsetLeft;
+            const canvasOffsetTop = pdfCanvas.value.offsetTop;
+            return {
+              top: `${canvasOffsetTop}px`,
+              left: `${canvasOffsetLeft + canvasX}px`,
+              height: `${pdfCanvas.value.height}px`,
+            };
+          };
+
+          onMounted(() => {
+            const lastPdfInfoRaw = localStorage.getItem("lastPdfInfo");
+            if (lastPdfInfoRaw) {
+              lastPdfInfo.value = JSON.parse(lastPdfInfoRaw);
+            }
+            window.addEventListener("resize", () => {
+              if (pdfDoc.value) {
+                renderPage(pageNum.value);
+              }
+            });
+          });
+
+          return {
+            pdfDoc,
+            pageNum,
+            scale,
+            coordinates,
+            pdfCanvas,
+            gridCanvas,
+            pdfContainer,
+            lastPdfInfo,
+            handlePDFUpload,
+            zoom,
+            clearAllCoordinates,
+            handleCanvasClick,
+            deleteCoordinate,
+            copyCoordinate,
+            handleNameChange,
+            handleCoordinateValueChange,
+            handleCoordinateValueKeyDown,
+            startDrag,
+            getMarkerStyle,
+            getLabelStyle,
+            getHLineStyle,
+            getVLineStyle,
+            round,
+          };
+        },
+      }).mount("#app");
+    </script>
+  </body>
+</html>
