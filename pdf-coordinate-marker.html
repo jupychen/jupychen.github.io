@@ -63,16 +63,42 @@
         display: flex;
         gap: 10px;
         margin-bottom: 20px;
+        align-items: center;
       }
 
-      .file-input {
-        flex: 1;
-        padding: 10px;
-        border: 2px dashed #4b6cb7;
+      .file-input-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        flex-grow: 1;
+      }
+
+      input[type="file"] {
+        display: none;
+      }
+
+      .file-input-label {
+        padding: 8px 15px;
+        background: #4b6cb7;
+        color: white;
+        border: none;
         border-radius: 8px;
-        background-color: #f8f9ff;
-        font-size: 1rem;
         cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        font-size: 0.9rem;
+      }
+
+      .file-input-label:hover {
+        background: #3a5795;
+      }
+
+      .file-input-instructions {
+        font-size: 0.9rem;
+        color: #555;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
       }
 
       .btn {
@@ -290,26 +316,28 @@
         <div class="content">
           <div class="pdf-section">
             <div class="controls">
-              <input
-                type="file"
-                @change="handlePDFUpload"
-                class="file-input"
-                accept=".pdf"
-              />
+              <div class="file-input-wrapper">
+                <label for="file-upload" class="file-input-label"
+                  >Choose PDF</label
+                >
+                <input
+                  id="file-upload"
+                  type="file"
+                  @change="handlePDFUpload"
+                  accept=".pdf"
+                />
+                <span class="file-input-instructions">
+                  Select a file to view its content.
+                  <span v-if="lastPdfInfo.name">
+                    Last viewed <strong>{{ lastPdfInfo.name }}</strong>
+                  </span>
+                </span>
+              </div>
               <button @click="zoom(1.2)" class="btn">+</button>
               <button @click="zoom(0.8)" class="btn">-</button>
               <button @click="clearAllCoordinates" class="btn">
                 Clear All
               </button>
-            </div>
-
-            <div
-              v-if="lastPdfInfo.name"
-              class="instructions"
-              style="margin-bottom: 10px"
-            >
-              You last viewed <strong>{{ lastPdfInfo.name }}</strong>. Upload it
-              again to restore your saved points.
             </div>
 
             <div class="pdf-container" ref="pdfContainer">
