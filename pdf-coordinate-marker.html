@@ -533,6 +533,26 @@
     <script>
       const { createApp, ref, onMounted, nextTick, computed, markRaw } = Vue;
 
+      function arrayBufferToBase64(buffer) {
+        let binary = "";
+        const bytes = new Uint8Array(buffer);
+        const len = bytes.byteLength;
+        for (let i = 0; i < len; i++) {
+          binary += String.fromCharCode(bytes[i]);
+        }
+        return window.btoa(binary);
+      }
+
+      function base64ToArrayBuffer(base64) {
+        const binary_string = window.atob(base64);
+        const len = binary_string.length;
+        const bytes = new Uint8Array(len);
+        for (let i = 0; i < len; i++) {
+          bytes[i] = binary_string.charCodeAt(i);
+        }
+        return bytes.buffer;
+      }
+
       createApp({
         setup() {
           pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -562,15 +582,34 @@
           const handlePDFUpload = (event) => {
             const file = event.target.files[0];
             if (file && file.type === "application/pdf") {
+              const lastPdfInfoRaw = localStorage.getItem("lastPdfInfo");
+              if (lastPdfInfoRaw) {
+                const lastPdf = JSON.parse(lastPdfInfoRaw);
+                if (lastPdf.id) {
+                  localStorage.removeItem(`pdf-data-${lastPdf.id}`);
+                }
+              }
+
               resetState();
-              currentPdfId.value = `pdf-coords-${file.name}-${file.size}-${file.lastModified}`;
+              const pdfId = `pdf-coords-${file.name}-${file.size}-${file.lastModified}`;
+              currentPdfId.value = pdfId;
               loadStateFromStorage();
               const fileReader = new FileReader();
 
               fileReader.onload = function () {
                 const typedArray = new Uint8Array(this.result);
+                try {
+                  const base64 = arrayBufferToBase64(this.result);
+                  localStorage.setItem(`pdf-data-${pdfId}`, base64);
+                } catch (e) {
+                  console.error("Error saving PDF to localStorage", e);
+                  alert(
+                    "Could not save PDF to local storage. It might be too large."
+                  );
+                }
+
                 loadPDF(typedArray).then(() => {
-                  lastPdfInfo.value = { name: file.name };
+                  lastPdfInfo.value = { name: file.name, id: pdfId };
                   localStorage.setItem(
                     "lastPdfInfo",
                     JSON.stringify(lastPdfInfo.value)
@@ -997,6 +1036,21 @@
             const lastPdfInfoRaw = localStorage.getItem("lastPdfInfo");
             if (lastPdfInfoRaw) {
               lastPdfInfo.value = JSON.parse(lastPdfInfoRaw);
+              if (lastPdfInfo.value.id) {
+                const pdfId = lastPdfInfo.value.id;
+                const base64 = localStorage.getItem(`pdf-data-${pdfId}`);
+                if (base64) {
+                  try {
+                    const arrayBuffer = base64ToArrayBuffer(base64);
+                    const typedArray = new Uint8Array(arrayBuffer);
+                    currentPdfId.value = pdfId;
+                    loadStateFromStorage();
+                    loadPDF(typedArray);
+                  } catch (e) {
+                    console.error("Error loading PDF from localStorage", e);
+                  }
+                }
+              }
             }
             window.addEventListener("resize", () => {
               if (pdfDoc.value) {
