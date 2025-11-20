@@ -122,10 +122,12 @@
         position: relative;
         width: 100%;
         min-height: 70vh;
+        max-height: 90vh;
         border: 1px solid #ddd;
         border-radius: 8px;
         overflow: auto;
         background-color: #f9f9f9;
+        cursor: grab;
       }
 
       #pdf-canvas {
@@ -157,6 +159,7 @@
         border-radius: 8px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
         border-left: 4px solid #4b6cb7;
+        cursor: pointer;
       }
 
       .coordinate-header {
@@ -165,6 +168,31 @@
         margin-bottom: 8px;
       }
 
+      .coordinates-section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+      }
+
+      .coordinates-section-header h2 {
+        margin: 0;
+      }
+
+      .copy-all-btn {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 14px;
+        transition: background-color 0.3s;
+      }
+
+      .copy-all-btn:hover {
+        background-color: #0056b3;
+      }
       .coordinate-name {
         font-weight: 600;
         color: #4b6cb7;
@@ -246,6 +274,16 @@
         transform: translate(-50%, -50%);
         pointer-events: auto;
         cursor: grab;
+      }
+      .point-marker::after {
+        content: "";
+        display: block;
+        position: relative;
+        width: 2px;
+        height: 16px;
+        background-color: black;
+        top: -12px;
+        left: 3px;
       }
 
       .point-marker:active {
@@ -340,7 +378,11 @@
               </button>
             </div>
 
-            <div class="pdf-container" ref="pdfContainer">
+            <div
+              class="pdf-container"
+              ref="pdfContainer"
+              @mousedown="startPadDrag"
+            >
               <div v-if="!pdfDoc" class="empty-state">
                 <i>📄</i>
                 <p>Upload a PDF file to get started</p>
@@ -400,7 +442,16 @@
           </div>
 
           <div class="coordinates-section">
-            <h2>Marked Coordinates</h2>
+            <div class="coordinates-section-header">
+              <h2>Marked Coordinates</h2>
+              <button
+                class="copy-all-btn"
+                @click="copyAllCoordinates($event)"
+                v-if="coordinates.length > 0"
+              >
+                Copy All
+              </button>
+            </div>
             <div class="coordinates-list">
               <div v-if="coordinates.length === 0" class="empty-state">
                 <i>📍</i>
@@ -411,6 +462,7 @@
                 v-for="coordinate in coordinates"
                 :key="coordinate.id"
                 class="coordinate-item"
+                @click="scrollToCoordinate(coordinate)"
               >
                 <div class="coordinate-header">
                   <div>
@@ -497,6 +549,9 @@
           const currentViewport = ref(null);
           const currentPdfId = ref(null);
           const lastPdfInfo = ref({});
+          const isDraggingPad = ref(false);
+          const padDragStart = ref({ x: 0, y: 0 });
+          const padScrollStart = ref({ top: 0, left: 0 });
 
           const round = (value) => Math.round(value);
 
@@ -642,7 +697,24 @@
             const { name, pdfX, pdfY } = coordinate;
             const x = round(pdfX);
             const y = round(pdfY);
-            const jsonString = JSON.stringify({ name, x, y });
+            const jsonString = JSON.stringify({ name, x, y }, null, 2);
+            navigator.clipboard.writeText(jsonString).then(() => {
+              const button = event.target;
+              const originalText = button.textContent;
+              button.textContent = "Copied!";
+              setTimeout(() => {
+                button.textContent = originalText;
+              }, 1000);
+            });
+          };
+
+          const copyAllCoordinates = (event) => {
+            const coordArray = coordinates.value.map((coordinate) => {
+              const x = round(coordinate.pdfX);
+              const y = round(coordinate.pdfY);
+              return { name: coordinate.name, x, y };
+            });
+            const jsonString = JSON.stringify(coordArray, null, 2);
             navigator.clipboard.writeText(jsonString).then(() => {
               const button = event.target;
               const originalText = button.textContent;
@@ -747,6 +819,7 @@
           };
 
           const startDrag = (e, coordinate) => {
+            e.stopPropagation();
             activeDrag.value = {
               id: coordinate.id,
               coord: coordinate,
@@ -779,12 +852,67 @@
 
           const endDrag = () => {
             if (activeDrag.value) {
-              pdfContainer.value.style.cursor = "default";
+              pdfContainer.value.style.cursor = "grab";
               saveStateToStorage();
               activeDrag.value = null;
               document.removeEventListener("mousemove", drag);
               document.removeEventListener("mouseup", endDrag);
             }
+          };
+
+          const startPadDrag = (e) => {
+            if (activeDrag.value) return;
+            if (e.button !== 0) return;
+
+            isDraggingPad.value = true;
+            padDragStart.value = { x: e.pageX, y: e.pageY };
+            padScrollStart.value = {
+              left: pdfContainer.value.scrollLeft,
+              top: pdfContainer.value.scrollTop,
+            };
+            pdfContainer.value.style.cursor = "grabbing";
+            document.addEventListener("mousemove", padDrag);
+            document.addEventListener("mouseup", endPadDrag);
+          };
+
+          const padDrag = (e) => {
+            if (!isDraggingPad.value) return;
+            e.preventDefault();
+            const dx = e.pageX - padDragStart.value.x;
+            const dy = e.pageY - padDragStart.value.y;
+            pdfContainer.value.scrollLeft = padScrollStart.value.left - dx;
+            pdfContainer.value.scrollTop = padScrollStart.value.top - dy;
+          };
+
+          const endPadDrag = () => {
+            if (isDraggingPad.value) {
+              isDraggingPad.value = false;
+              pdfContainer.value.style.cursor = "grab";
+              document.removeEventListener("mousemove", padDrag);
+              document.removeEventListener("mouseup", endPadDrag);
+            }
+          };
+
+          const scrollToCoordinate = (coordinate) => {
+            if (!pdfDoc.value || !currentViewport.value) return;
+
+            const canvasPoint = currentViewport.value.convertToViewportPoint(
+              coordinate.pdfX,
+              coordinate.pdfY
+            );
+            const canvasX = canvasPoint[0];
+            const canvasY = canvasPoint[1];
+
+            const container = pdfContainer.value;
+
+            const targetScrollLeft = canvasX - container.clientWidth / 2;
+            const targetScrollTop = canvasY - container.clientHeight / 2;
+
+            container.scrollTo({
+              left: targetScrollLeft,
+              top: targetScrollTop,
+              behavior: "smooth",
+            });
           };
 
           const zoom = (factor) => {
@@ -867,6 +995,18 @@
                 renderPage(pageNum.value);
               }
             });
+
+            pdfContainer.value.addEventListener("wheel", (event) => {
+              event.preventDefault();
+              const zoomFactor = event.deltaY < 0 ? 1.05 : 1 / 1.05;
+              zoom(zoomFactor);
+            });
+
+            // pdfContainer.value.addEventListener("resize", function (event) {
+            //   event.preventDefault();
+            //   let zoomFactor = window.devicePixelRatio;
+            //   zoom(zoomFactor);
+            // });
           });
 
           return {
@@ -881,6 +1021,7 @@
             handlePDFUpload,
             zoom,
             clearAllCoordinates,
+            copyAllCoordinates,
             handleCanvasClick,
             deleteCoordinate,
             copyCoordinate,
@@ -888,11 +1029,13 @@
             handleCoordinateValueChange,
             handleCoordinateValueKeyDown,
             startDrag,
+            startPadDrag,
             getMarkerStyle,
             getLabelStyle,
             getHLineStyle,
             getVLineStyle,
             round,
+            scrollToCoordinate,
           };
         },
       }).mount("#app");
