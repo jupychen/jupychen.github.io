@@ -18,6 +18,15 @@
         display: flex;
         justify-content: center;
       }
+      .info-message {
+        background-color: #f8d7da;
+        color: #721c24;
+        border: 1px solid #f5c6cb;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 2rem;
+        text-align: left;
+      }
       .container {
         max-width: 800px;
         width: 100%;
@@ -153,12 +162,23 @@
     <div class="container">
       <h1>PDF and Image Merger</h1>
       <p>Upload, sort, and merge files into a single PDF.</p>
+      <div class="info-message">
+        <strong>This is a pure frontend tool.</strong> No data is stored on any
+        server. Everything happens in your browser, so your files are perfectly
+        safe. Please remember to save your merged PDF, as nothing is saved
+        automatically.
+      </div>
 
       <div class="file-input-wrapper">
         <label for="fileInput" class="file-input-label"
           >Click to Upload Files</label
         >
-        <input type="file" id="fileInput" multiple accept=".pdf,image/*" />
+        <input
+          type="file"
+          id="fileInput"
+          multiple
+          accept=".pdf,image/png,image/jpeg"
+        />
       </div>
 
       <div id="fileList"></div>
@@ -273,9 +293,13 @@
               const page = finalPdf.addPage(a4PageSize);
               const imageDims = embeddedImage.scale(1);
 
+              const margin = 50; // in points
+              const availableWidth = a4PageSize[0] - margin * 2;
+              const availableHeight = a4PageSize[1] - margin * 2;
+
               const scaleToFit = Math.min(
-                a4PageSize[0] / imageDims.width,
-                a4PageSize[1] / imageDims.height
+                availableWidth / imageDims.width,
+                availableHeight / imageDims.height
               );
               const scaledWidth = imageDims.width * scaleToFit;
               const scaledHeight = imageDims.height * scaleToFit;
